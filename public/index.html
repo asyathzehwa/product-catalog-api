@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Catalog</title>
+</head>
+<body>
+    <h1>Product Catalog</h1>
+
+    <button id="loadBtn">Load All Products</button>
+
+    <div id="productContainer"></div>
+
+    <script>
+        document.getElementById("loadBtn").addEventListener("click", () => {
+            fetch("/products")
+                .then(res => res.json())
+                .then(data => {
+                    const box = document.getElementById("productContainer");
+                    box.innerHTML = "";
+
+                    data.forEach(p => {
+                        box.innerHTML += `
+                            <div style="border:1px solid black; padding:10px; margin:10px;">
+                                <h3>${p.name}</h3>
+                                <p>Category: ${p.category}</p>
+                                <p>Price: ₹${p.price}</p>
+                                <p>Stock: ${p.inStock ? "Available" : "Out of Stock"}</p>
+                            </div>
+                        `;
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
